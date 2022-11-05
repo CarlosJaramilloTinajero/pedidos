@@ -1,0 +1,28 @@
+footer{
+    /* background-color: #2291b3ce; */
+    background-color: rgb(20, 20, 20);
+    width: 100%;
+    padding: 80px;
+    margin-top: 150px;
+}
+
+.centerL{
+    text-align: center;
+}
+
+p{
+    color: white;
+}
+
+hr{
+    max-width: 500px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vertical{
+    border-left: 1px rgb(255, 255, 255, 0.3) solid;
+    height: 155px;
+    margin: 10px;
+}

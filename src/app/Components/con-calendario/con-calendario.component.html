@@ -1,0 +1,41 @@
+<div class="div contenedor">
+    <h2 class="titulo">Pedidos por dia calendario</h2>
+</div>
+
+<div class="calendario">
+    <div class="d-flex justify-content-center ">
+        <h1>{{mes}} - {{ano}}</h1>
+    </div>
+    <div class="botones d-flex justify-content-center   ">
+        <button (click)="anterior()" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg><strong>Anterior</strong></button>
+
+        <button (click)="siguiente()" class="btn btn-secondary"><strong>Siguiente</strong><svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+            </svg></button>
+
+    </div>
+    <ol class="olDias">
+        <li class="Dia-semana">Lunes</li>
+        <li class="Dia-semana">Martes</li>
+        <li class="Dia-semana">Miercoles</li>
+        <li class="Dia-semana">Jueves</li>
+        <li class="Dia-semana">Viernes</li>
+        <li class="Dia-semana">Sabado</li>
+        <li class="Dia-semana">Domingo</li>
+        <li *ngFor="let diaa of dia; let i = index">
+            <div *ngIf="diaa != null" class="dia">
+                {{diaa}}
+            </div>
+
+            <div *ngIf="diaa == null" class="NoExite"></div>
+        </li>
+    </ol>
+
+</div>

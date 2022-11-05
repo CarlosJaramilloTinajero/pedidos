@@ -1,0 +1,93 @@
+<div class="div contenedor">
+    <h2 class="titulo">Pedidos por dia</h2>
+</div>
+
+
+
+<div class="d-flex justify-content-end" style="margin-top: 80px;">
+    <div class="botononesOPC d-flex">
+        <h5 (click)="cambioDeBusqueda('dia')">Dia</h5>
+        <h5 (click)="cambioDeBusqueda('dom')">Dom</h5>
+        <!-- <hr class="hrMenu"> -->
+    </div>
+
+    <!-- Busqueda por dia -->
+    <form action="" class="formulario" (ngSubmit)="bucarPordia()"
+        [ngClass]="{'mostrar': busquedaPor === 'dia', 'ocultar': busquedaPor === 'dom' }">
+        <div class="mb-4">
+            <label for="" class="form-label">Busqueda por dia</label>
+            <input type="date" name="dia" [(ngModel)]="diaForm" id="" class="form-control" style="width: 164px;">
+        </div>
+        <div class="mb-4">
+            <input type="submit" value="Buscar" class="btn btn-primary btn-sm">
+        </div>
+    </form>
+
+
+    <!-- Busqueda por domicilio -->
+    <form action="" class="formulario" (ngSubmit)="buscarPorDom()"
+        [ngClass]="{'mostrar': busquedaPor === 'dom', 'ocultar': busquedaPor === 'dia' }">
+        <div class="mb-4">
+            <label for="" class="form-label">Busqueda por dom.</label>
+            <input type="text" name="dom" [(ngModel)]="porDom" class="form-control" style="width: 164px;">
+        </div>
+        <div class="mb-4">
+            <input type="submit" value="Buscar" class="btn btn-primary btn-sm">
+        </div>
+    </form>
+
+
+    <table class="table table-dark  table-striped tablaChica">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Valor</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Pedidos cantidad</td>
+                <td>{{conDiaFillter.length}}</td>
+            </tr>
+            <tr>
+                <td>Dia</td>
+                <td>{{dia}}</td>
+            </tr>
+            <tr>
+                <td>Total Propina</td>
+                <td>{{totalPropina}}</td>
+            </tr>
+            <tr>
+                <td>Total Pagado</td>
+                <td>{{totalPagado}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<table class="table table-dark tabla table-striped">
+    <thead>
+        <button type="button" class="btn btn-secondary btn-sm btn-refres" (click)="getConDia()">Refrescar tabla</button>
+
+        <tr>
+            <th>#</th>
+            <th (click)="acomodarPorDomicilio()">Domicilio</th>
+            <th (click)="acomodarPorPrecio()">Precio</th>
+            <th (click)="acomodarPorPago()">Pago</th>
+            <th (click)="acomodarPorPropina()">Propina</th>
+            <th>Dia</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pedidoDia of conDiaFillter; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{pedidoDia.domicilio}}</td>
+            <td>{{pedidoDia.precio}}</td>
+            <td>{{pedidoDia.pago}}</td>
+            <td>{{pedidoDia.propina}}</td>
+            <td>{{pedidoDia.dia}}</td>
+        </tr>
+    </tbody>
+</table>

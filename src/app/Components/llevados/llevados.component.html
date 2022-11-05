@@ -1,0 +1,70 @@
+<div class="contenedor div">
+    <h2 class="titulo">Pedidos llevados</h2>
+</div>
+<div style="max-width: 600px; margin-left: auto; margin-right: auto;">
+    <app-alert [class]="class" [msg]="msg" [mostrar]="mostrar" (quitarAlert)="quitarAler();"></app-alert>
+</div>
+
+<div class="d-flex justify-content-end" style="margin-right: 40px;">
+    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#terminarModal">Terminar
+        dia</button>
+</div>
+
+<app-tabla-llevados [llevados]="llevados" (eventModificar)="putLlevado($event)" (eventEliminar)="deleteLlevado($event)">
+</app-tabla-llevados>
+
+<div class="d-flex justify-content-end">
+    <table class="table table-dark table-striped table-sm tablaTotales">
+        <thead>
+            <tr>
+                <th>Totales</th>
+                <th>$</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Total precio</td>
+                <td>{{totalPrecio | currency}}</td>
+            </tr>
+            <tr>
+                <td>Total pagado</td>
+                <td>{{totalPagado | currency}}</td>
+            </tr>
+            <tr>
+                <td>Total propina</td>
+                <td>{{totalPropina | currency}}</td>
+            </tr>
+            <tr>
+                <td>Total pedidos</td>
+                <td>{{llevados.length}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal terminar-->
+<div class="modal fade" id="terminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Terminar dia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro de <strong>terminar</strong> el dia?
+            </div>
+            <form action="" (ngSubmit)="terminarDia()" style="width: 90%; margin-left: auto; margin-right: auto;">
+                <div class="mb-4">
+                    <label for="" class="form-label">Dia</label>
+                    <input type="date" name="dia" [(ngModel)]="dia" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <input type="submit" class="btn btn-danger" data-bs-dismiss="modal" value="Terminar">
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

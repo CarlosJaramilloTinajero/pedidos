@@ -1,0 +1,21 @@
+<div class="contenedor div">
+    <h2 class="titulo">Agregar nuevo pedido</h2>
+
+    <form class="row g-3 " (ngSubmit)="addPedidoS();">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="domicilio" [(ngModel)]="addPedido.domicilio"
+                placeholder="Domicilio">
+        </div>
+        <div class="col-auto">
+            <input type="number" class="form-control" name="precio" placeholder="Precio" [(ngModel)]="addPedido.precio">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Agregar</button>
+        </div>
+    </form>
+    <app-alert [class]="class" [msg]="msg" [mostrar]="mostrar" (quitarAlert)="quitarAler();"></app-alert>
+</div>
+
+<app-pedidos-tabla [pedidos]="pedidos" (eventEliminar)="EliminarPedido($event, true)" (eventPut)="putPedido($event)"
+    (eventLlevado)="addPedidoLlevado($event)" (eventDeuda)="addDeuda($event)">
+</app-pedidos-tabla>

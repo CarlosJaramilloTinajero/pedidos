@@ -1,0 +1,8 @@
+.Mostrar{
+    visibility: visible;
+}
+.NoMostrar{
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
+}

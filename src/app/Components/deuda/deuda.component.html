@@ -1,0 +1,9 @@
+<div class="contenedor div">
+    <h2 class="titulo">Deudas</h2>
+</div>
+<div style="max-width: 600px; margin-left: auto; margin-right: auto;">
+    <app-alert [class]="class" [msg]="msg" [mostrar]="mostrar" (quitarAlert)="quitarAler();"></app-alert>
+</div>
+
+<app-tabla-dedudas [deudas]="deudas" (eventPut)="putDeuda($event)" (eventEliminar)="eliminarDeuda($event)">
+</app-tabla-dedudas>

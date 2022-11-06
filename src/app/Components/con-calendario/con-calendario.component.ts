@@ -9,33 +9,38 @@ import { ConDiaService } from 'src/app/Services/con-dia.service';
 })
 export class ConCalendarioComponent implements OnInit {
 
+  pedidosModalArr: ConDia[] = [];
+  diaModal: number = 0;
+
   date: Date = new Date("2022-11-1");
 
   diaSemana: string[] = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 
-  meses: string[] = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO",
-    "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
+  meses: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Juio", "Agosto",
+    "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
+  conDia: ConDia[] = [];
+  pedidosPorDia: number[] = [];
 
   indice: number = 0;
-  conDia: ConDia[] = [];
   diasMes: string[] = [];
   mes: string = "";
   mesInt: number = 0;
   ano: number = 0;
-  dia: number[] = [];
+  dias: number[] = [];
 
 
 
   constructor(private conDiaService: ConDiaService) { }
 
   ngOnInit(): void {
-    this.getDia();
+    this.getConDia();
   }
 
   getConDia() {
     this.conDiaService.getConDia().subscribe(data => {
       this.conDia = data
+      this.getDia();
     });
   }
 
@@ -53,33 +58,38 @@ export class ConCalendarioComponent implements OnInit {
 
     for (let i = 0; i < this.getCantidadDias(mes, this.ano) + this.indice; i++) {
       if (i >= this.indice) {
-        this.diasMes[i] = this.diaSemana[new Date(this.ano, mes, i - (this.indice - 1)).getDay()];
-        this.dia[i] = i - (this.indice - 1);
-        // (i - indice) + 1
-      } else {
-
-        this.diasMes[i] = "H" ;
-        
+        // this.diasMes[i] = this.diaSemana[new Date(this.ano, mes, i - (this.indice - 1)).getDay()];
+        this.dias[i] = i - (this.indice - 1);
+        this.pedidosPorDia[i] = this.getCantidadDePedidosPorMes(new Date(this.ano, this.mesInt, this.dias[i]));
       }
     }
 
-    // this.diasMes.forEach(dia => console.log(dia));
+    // console.log(this.getCantidadDePedidosPorMes(new Date("2022-11-1")));
+  }
 
-    console.log(this.getCantidadDias(mes, this.ano));
-    // console.log(date.getDate());
-    // console.log(this.diaSemana[date.getDay()]);
+  pedidosModal(dia: number) {
+    if (dia < 10) {
+      var fecha: string = this.ano.toString() + "-" + (this.mesInt + 1).toString() + "-0" + dia.toString();
+
+    } else {
+      var fecha: string = this.ano.toString() + "-" + (this.mesInt + 1).toString() + "-" + dia.toString();
+    }
+    this.pedidosModalArr = this.conDia.filter(pedido => pedido.dia == fecha);
+    this.diaModal = dia;
+    console.log(fecha);
+    // console.log(fecha);
   }
 
 
   // Helper
   inicializarVar() {
     this.indice = 0;
-    this.conDia = [];
+    // this.conDia = [];
     this.diasMes = [];
     this.mes = "";
     this.mesInt = 0;
     this.ano = 0;
-    this.dia = [];
+    this.dias = [];
   }
 
   siguiente() {
@@ -104,6 +114,21 @@ export class ConCalendarioComponent implements OnInit {
 
   getCantidadDias(mes: number, ano: number) {
     return new Date(ano, mes + 1, 0).getDate();
+  }
+
+  getCantidadDePedidosPorMes(date: Date): number {
+    var cant: number = 0;
+    this.conDia.forEach(pedido => {
+      var datePedido: Date = new Date(pedido.dia);
+      datePedido.setDate(datePedido.getDate() + 1);
+
+      if (datePedido.getDate() == date.getDate() && datePedido.getMonth() == date.getMonth()
+        && datePedido.getFullYear() == date.getFullYear()) {
+        cant++;
+      }
+
+    });
+    return cant;
   }
 
 }

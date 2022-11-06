@@ -4,9 +4,12 @@ ol {
     grid-template-columns: repeat(7, 1fr);
 }
 
-
+a{
+    text-decoration: none;
+}
 .dia {
     transition: all .5s ease-in-out;
+    cursor: pointer;
 }
 
 .dia:hover {

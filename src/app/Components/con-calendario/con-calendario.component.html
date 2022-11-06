@@ -29,13 +29,59 @@
         <li class="Dia-semana">Viernes</li>
         <li class="Dia-semana">Sabado</li>
         <li class="Dia-semana">Domingo</li>
-        <li *ngFor="let diaa of dia; let i = index">
-            <div *ngIf="diaa != null" class="dia">
-                {{diaa}}
-            </div>
+        <li *ngFor="let diaa of dias; let i = index">
+            <a (click)="pedidosModal(diaa)" data-bs-toggle="modal" data-bs-target="#pedidosModal">
+                <div *ngIf="diaa != null" class="dia">
+                    {{diaa}}<br>
+                    <small *ngIf="pedidosPorDia[i]">{{pedidosPorDia[i]}} pedidos</small>
 
-            <div *ngIf="diaa == null" class="NoExite"></div>
+                </div>
+                <div *ngIf="diaa == null" class="NoExite"></div>
+            </a>
         </li>
     </ol>
 
+</div>
+
+<!-- Modal pedidos -->
+<div class="modal modal-dark fade" id="pedidosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Pedidos de la fecha {{diaModal}} de {{mes}} de
+                    {{ano}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="pedidosModalArr.length == 0">
+                    <h4>No hay pedidos en este dia</h4>
+                </div>
+
+                <table *ngIf="pedidosModalArr.length > 0" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Domicilio</th>
+                            <th>Precio</th>
+                            <th>pago</th>
+                            <th>propina</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pedido of pedidosModalArr; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{pedido.domicilio}}</td>
+                            <td>{{pedido.precio}}</td>
+                            <td>{{pedido.pago}}</td>
+                            <td>{{pedido.propina}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

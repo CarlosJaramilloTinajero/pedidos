@@ -12,6 +12,7 @@ export class TablaLlevadosComponent implements OnInit {
   @Output() eventEliminar: EventEmitter<Llevados> = new EventEmitter();
 
   @Input() llevados: Llevados[] = [];
+  @Input() mostrarAcciones: boolean = true;
   llevadoModal: Llevados = new Llevados();
   tituloModal: string = "";
   constructor() { }

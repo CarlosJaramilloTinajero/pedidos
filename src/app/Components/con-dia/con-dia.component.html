@@ -2,8 +2,6 @@
     <h2 class="titulo">Pedidos por dia</h2>
 </div>
 
-
-
 <div class="d-flex justify-content-end" style="margin-top: 80px;">
     <div class="botononesOPC d-flex">
         <h5 (click)="cambioDeBusqueda('dia')">Dia</h5>
@@ -19,7 +17,11 @@
             <input type="date" name="dia" [(ngModel)]="diaForm" id="" class="form-control" style="width: 164px;">
         </div>
         <div class="mb-4">
-            <input type="submit" value="Buscar" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg><span>Buscar</span></button>
         </div>
     </form>
 
@@ -32,7 +34,11 @@
             <input type="text" name="dom" [(ngModel)]="porDom" class="form-control" style="width: 164px;">
         </div>
         <div class="mb-4">
-            <input type="submit" value="Buscar" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg><span>Buscar</span></button>
         </div>
     </form>
 
@@ -50,9 +56,13 @@
                 <td>Pedidos cantidad</td>
                 <td>{{conDiaFillter.length}}</td>
             </tr>
-            <tr>
+            <tr *ngIf="busquedaPor == 'dia' ">
                 <td>Dia</td>
                 <td>{{dia}}</td>
+            </tr>
+            <tr *ngIf="busquedaPor == 'dom' ">
+                <td>Domicilio</td>
+                <td>{{dom}}</td>
             </tr>
             <tr>
                 <td>Total Propina</td>
@@ -65,7 +75,6 @@
         </tbody>
     </table>
 </div>
-
 
 <table class="table table-dark tabla table-striped">
     <thead>
@@ -81,13 +90,32 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let pedidoDia of conDiaFillter; let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{pedidoDia.domicilio}}</td>
-            <td>{{pedidoDia.precio}}</td>
-            <td>{{pedidoDia.pago}}</td>
-            <td>{{pedidoDia.propina}}</td>
-            <td>{{pedidoDia.dia}}</td>
+        <tr *ngFor="let pedidoDia of conDiaFillter; let indice = index">
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{indice + 1}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.domicilio}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.precio}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.pago}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.propina}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.dia}}</td>
         </tr>
     </tbody>
 </table>
+
+<!-- Controladores tabla -->
+<div class="d-flex justify-content-center ">
+    <div class="p-2">
+        <button (click)="anterior()" class="btn btn-dark"
+            [ngClass]="{'opacity-25':pagina==1, 'btnG':pagina > 1}">Anterior</button>
+    </div>
+    <div class="p-2">
+        <form (submit)="maxFilasEvent()" action="" class="formularioMax">
+            <label for="" class="form-label">Max:</label><input type="number" name="maxFilasInput"
+                [(ngModel)]="maxFilasInput" value="" class="form-control maxFilas"
+                [placeholder]="'Max filas: ' + maxFilas"><label for="" class="form-label"> Filas</label>
+        </form>
+    </div>
+    <div class="p-2">
+        <button (click)="siguiente()" class="btn btn-dark"
+            [ngClass]="{'opacity-25':pagina * maxFilas > maxPedidos, 'btnG':pagina * maxFilas < maxPedidos}">Siguiente</button>
+    </div>
+</div>

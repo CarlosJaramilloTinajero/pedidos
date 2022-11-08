@@ -1,0 +1,141 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { ConDia } from 'src/app/Models/con-dia';
+import { Llevados } from 'src/app/Models/llevados';
+import { ConDiaService } from 'src/app/Services/con-dia.service';
+
+@Component({
+  selector: 'app-calendario',
+  templateUrl: './calendario.component.html',
+  styleUrls: ['./calendario.component.css']
+})
+export class CalendarioComponent implements OnInit {
+
+  pedidosModalArr: ConDia[] = [];
+  ModalArrPedidosSinDia: Llevados[] = [];
+  diaModal: number = 0;
+
+  date: Date = new Date("2022-11-1");
+
+  diaSemana: string[] = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+
+  meses: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Juio", "Agosto",
+    "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+
+  pedidosPorDia: number[] = [];
+
+  indice: number = 0;
+  diasMes: string[] = [];
+  mes: string = "";
+  mesInt: number = 0;
+  ano: number = 0;
+  dias: number[] = [];
+
+  conDia: ConDia[] = [];
+
+
+  constructor(private conDiaService: ConDiaService) { }
+
+  ngOnInit(): void {
+    this.getConDia();
+    this.getDia();
+  }
+
+  getConDia() {
+    this.conDiaService.getConDia().subscribe(data => {
+      this.conDia = data
+      this.getDia();
+    });
+  }
+  getDia() {
+    this.mes = this.meses[this.date.getMonth()];
+    this.mesInt = this.date.getMonth();
+    var mes: number = this.date.getMonth();
+    this.ano = this.date.getFullYear();
+
+    if (new Date(this.ano, mes, 1).getDay() == 0) {
+      this.indice = 6;
+    } else {
+      this.indice = (new Date(this.ano, mes, 1).getDay()) - 1;
+    }
+
+    for (let i = 0; i < this.getCantidadDias(mes, this.ano) + this.indice; i++) {
+      if (i >= this.indice) {
+        this.dias[i] = i - (this.indice - 1);
+        this.pedidosPorDia[i] = this.getCantidadDePedidosPorDia(new Date(this.ano, this.mesInt, this.dias[i]));
+      }
+    }
+
+  }
+
+  pedidosModal(dia: number) {
+    this.ModalArrPedidosSinDia = [];
+    if (dia < 10) {
+      var fecha: string = this.ano.toString() + "-" + (this.mesInt + 1).toString() + "-0" + dia.toString();
+    } else {
+      var fecha: string = this.ano.toString() + "-" + (this.mesInt + 1).toString() + "-" + dia.toString();
+    }
+    this.pedidosModalArr = this.conDia.filter(pedido => pedido.dia == fecha);
+    this.diaModal = dia;
+    var i: number = 0;
+    this.pedidosModalArr.forEach(pedidoConDia => {
+      this.ModalArrPedidosSinDia[i] = new Llevados();
+      this.ModalArrPedidosSinDia[i].id = pedidoConDia.id;
+      this.ModalArrPedidosSinDia[i].domicilio = pedidoConDia.domicilio;
+      this.ModalArrPedidosSinDia[i].precio = pedidoConDia.precio;
+      this.ModalArrPedidosSinDia[i].pago = pedidoConDia.pago;
+      this.ModalArrPedidosSinDia[i].propina = pedidoConDia.propina;
+      i++;
+    });
+  }
+
+
+  // Helper
+  inicializarVar() {
+    this.indice = 0;
+    this.diasMes = [];
+    this.mes = "";
+    this.mesInt = 0;
+    this.ano = 0;
+    this.dias = [];
+  }
+
+  siguiente() {
+    if (this.mesInt == 11) {
+      this.date = new Date(this.ano + 1, 0, 1);
+    } else if (this.mesInt < 11) {
+      this.date = new Date(this.ano, this.mesInt + 1, 1);
+    }
+    this.inicializarVar();
+    this.getDia();
+  }
+
+  anterior() {
+    if (this.mesInt == 0) {
+      this.date = new Date(this.ano - 1, 11, 1);
+    } else if (this.mesInt > 0) {
+      this.date = new Date(this.ano, this.mesInt - 1, 1);
+    }
+    this.inicializarVar();
+    this.getDia();
+  }
+
+  getCantidadDias(mes: number, ano: number) {
+    return new Date(ano, mes + 1, 0).getDate();
+  }
+
+  getCantidadDePedidosPorDia(date: Date): number {
+    var cant: number = 0;
+    this.conDia.forEach(pedido => {
+      var datePedido: Date = new Date(pedido.dia);
+      datePedido.setDate(datePedido.getDate() + 1);
+
+      if (datePedido.getDate() == date.getDate() && datePedido.getMonth() == date.getMonth()
+        && datePedido.getFullYear() == date.getFullYear()) {
+        cant++;
+      }
+
+    });
+    return cant;
+  }
+}

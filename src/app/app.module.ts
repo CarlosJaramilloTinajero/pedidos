@@ -16,6 +16,7 @@ import { TablaDedudasComponent } from './Components/tabla-dedudas/tabla-dedudas.
 import { ConDiaComponent } from './Components/con-dia/con-dia.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { ConCalendarioComponent } from './Components/con-calendario/con-calendario.component';
+import { CalendarioComponent } from './Components/calendario/calendario.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { ConCalendarioComponent } from './Components/con-calendario/con-calendar
     PedidosComponent,
     NavbarComponent,
     PedidosTablaComponent, 
-    AlertComponent, LlevadosComponent, TablaLlevadosComponent, DeudaComponent, TablaDedudasComponent, ConDiaComponent, FooterComponent, ConCalendarioComponent
+    AlertComponent, LlevadosComponent, TablaLlevadosComponent, DeudaComponent, TablaDedudasComponent, ConDiaComponent, FooterComponent, ConCalendarioComponent, CalendarioComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,8 @@
-<table class="table table-dark table-striped tabla">
+<table class="table table-dark table-striped tabla table-sm">
     <thead>
+        <tr>
+            <td style="width: 160px;"><strong>Catn. pedios: {{pedidos.length}}</strong></td>
+        </tr>
         <tr>
             <th>Posicion</th>
             <th>Domicilio</th>
@@ -8,22 +11,28 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let pedido of pedidos">
-            <td>{{pedido.posicion}}</td>
-            <td>{{pedido.domicilio}}</td>
-            <td>{{pedido.precio | currency}}</td>
-            <td>
+        <tr *ngFor="let pedido of pedidos; let indice = index">
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedido.posicion}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedido.domicilio}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedido.precio | currency}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">Acciones</button>
+                    aria-expanded="false">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+                        <path
+                            d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0Zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708ZM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11Z" />
+                    </svg> -->
+                    <span>Acciones</span>
+                </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
                     <li>
                         <button class="dropdown-item" (click)="pedidoToPedidoModal(pedido)" data-bs-toggle="modal"
                             data-bs-target="#modificarModal">Modificar</button>
                     </li>
                     <li>
-                        <button class="dropdown-item"
-                            (click)="pedidoModal = pedido; llevadoModal.pago = pedido.precio" data-bs-toggle="modal"
-                            data-bs-target="#llevadoModal">Llevado</button>
+                        <button class="dropdown-item" (click)="pedidoModal = pedido; llevadoModal.pago = pedido.precio"
+                            data-bs-toggle="modal" data-bs-target="#llevadoModal">Llevado</button>
                     </li>
                     <li>
                         <button class="dropdown-item" (click)="pedidoModal = pedido" data-bs-toggle="modal"
@@ -33,21 +42,30 @@
                         <button class="dropdown-item" (click)="pedidoModal = pedido" data-bs-toggle="modal"
                             data-bs-target="#eliminarModal">Eliminar</button>
                     </li>
-                    <!-- <h1>Hola mundo!</h1> -->
                 </ul>
             </td>
         </tr>
-
-
     </tbody>
-
-    <tfoot>
-        <tr>
-            <td style="width: 160px;"><strong>Catn. pedios: {{pedidos.length}}</strong></td>
-        </tr>
-    </tfoot>
 </table>
 
+<!-- Controladores tabla -->
+<div class="d-flex justify-content-center ">
+    <div class="p-2">
+        <button (click)="anterior()" class="btn btn-dark"
+            [ngClass]="{'opacity-25':pagina==1, 'btnG':pagina > 1}">Anterior</button>
+    </div>
+    <div class="p-2">
+        <form (submit)="maxFilasEvent()" action="" class="formularioMax">
+            <label for="" class="form-label">Max:</label><input type="number" name="maxFilasInput"
+                [(ngModel)]="maxFilasInput" value="" class="form-control maxFilas"
+                [placeholder]="'Max filas: ' + maxFilas">
+        </form>
+    </div>
+    <div class="p-2">
+        <button (click)="siguiente()" class="btn btn-dark"
+            [ngClass]="{'opacity-25':pagina * maxFilas > maxPedidos, 'btnG':pagina * maxFilas < maxPedidos}">Siguiente</button>
+    </div>
+</div>
 
 
 <!-- Modal Modificar-->
@@ -77,12 +95,23 @@
                             class="form-control">
                     </div>
                     <div class="d-flex justify-content-end">
-                        <input type="submit" class="btn btn-primary" value="Modificar" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-wrench" viewBox="0 0 16 16">
+                                <path
+                                    d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z" />
+                            </svg><span>Modificar</span></button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg><span>Cerrar</span> </button>
             </div>
         </div>
     </div>
@@ -113,13 +142,26 @@
                             class="form-control">
                     </div>
                     <div class="d-flex justify-content-end">
-                        <input type="submit" class="btn btn-primary" value="Llevado" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                                <path
+                                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                            </svg><span>Llevado</span></button>
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg><span>Cerrar</span> </button>
             </div>
         </div>
     </div>
@@ -153,13 +195,24 @@
                         </select>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <input type="submit" class="btn btn-primary" value="Agregar" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                            </svg><span>Agregar</span></button>
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg><span>Cerrar</span> </button>
             </div>
         </div>
     </div>
@@ -174,12 +227,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Esta seguro de <strong>eliminar</strong> el pedido <strong>{{pedidoModal.domicilio}}</strong>?
+                <p>¿Esta seguro de <strong>eliminar</strong> el pedido <strong>{{pedidoModal.domicilio}}</strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                    (click)="eliminarPedido()">Eliminar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg><span>Cerrar</span> </button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarPedido()"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                    </svg><span>Eliminar</span></button>
             </div>
         </div>
     </div>

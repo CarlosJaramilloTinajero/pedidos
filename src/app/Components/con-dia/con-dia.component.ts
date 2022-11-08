@@ -9,6 +9,15 @@ import { ConDiaService } from 'src/app/Services/con-dia.service';
 })
 export class ConDiaComponent implements OnInit {
 
+
+
+  maxFilas: number = 25;
+  maxFilasInput = this.maxFilas;
+  pagina: number = 1;
+  paginaA: number = 0;
+  maxPedidos: number = 0;
+
+
   busquedaPor: string = "dia";
 
   porDom: string = "";
@@ -16,6 +25,7 @@ export class ConDiaComponent implements OnInit {
   conDia: ConDia[] = [];
   conDiaFillter: ConDia[] = [];
   dia: string = "";
+  dom: string = "";
   totalPropina: number = 0;
   totalPagado: number = 0;
   diaForm: string = "";
@@ -41,6 +51,7 @@ export class ConDiaComponent implements OnInit {
       this.dia = "";
       this.totalPagado = this.conDiaFillter.reduce((acc, curr) => acc += curr.pago, 0)
       this.totalPropina = this.conDiaFillter.reduce((acc, curr) => acc += curr.propina, 0)
+      this.maxPedidos = data.length
     });
   }
 
@@ -59,6 +70,7 @@ export class ConDiaComponent implements OnInit {
 
   buscarPorDom() {
     this.conDiaFillter = this.conDia.filter((element => element.domicilio.toUpperCase() == this.porDom.toUpperCase()));
+    this.dom = this.porDom;
   }
 
   acomodarPorDomicilio() {
@@ -114,6 +126,29 @@ export class ConDiaComponent implements OnInit {
         this.propinaAcomodar = "Normal";
         break;
     }
+  }
+
+
+  // Tabla
+  siguiente() {
+    if (this.pagina * this.maxFilas < this.conDiaFillter.length) {
+      this.pagina++;
+      this.paginaA++;
+      // console.log(this.items.length);
+    }
+  }
+
+  anterior() {
+    if (this.pagina > 1) {
+      this.pagina--;
+      this.paginaA--;
+    }
+  }
+
+  maxFilasEvent() {
+    this.maxFilas = this.maxFilasInput;
+    this.pagina = 1;
+    this.paginaA = 0;
   }
 
 }

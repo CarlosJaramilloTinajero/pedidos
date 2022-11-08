@@ -10,10 +10,17 @@ import { Pedidos } from 'src/app/Models/pedidos';
 })
 export class PedidosTablaComponent implements OnInit {
 
+
+  maxFilas: number = 25;
+  maxFilasInput = this.maxFilas;
+  pagina: number = 1;
+  paginaA: number = 0;
+
   tituloModal: string = "";
 
   // Datos de entrada
   @Input() pedidos: Pedidos[] = [];
+  @Input() maxPedidos: number = 0;
 
   // Eventos de salida
   @Output() eventEliminar: EventEmitter<Pedidos> = new EventEmitter();
@@ -59,6 +66,28 @@ export class PedidosTablaComponent implements OnInit {
     this.deudaModal.id = this.pedidoModal.id;
     this.deudaModal.domicilio = this.pedidoModal.domicilio;
     this.eventDeuda.emit(this.deudaModal);
+  }
+
+  // Tabla
+  siguiente() {
+    if (this.pagina * this.maxFilas < this.pedidos.length) {
+      this.pagina++;
+      this.paginaA++;
+      // console.log(this.items.length);
+    }
+  }
+
+  anterior() {
+    if (this.pagina > 1) {
+      this.pagina--;
+      this.paginaA--;
+    }
+  }
+
+  maxFilasEvent() {
+    this.maxFilas = this.maxFilasInput;
+    this.pagina = 1;
+    this.paginaA = 0;
   }
 
 }

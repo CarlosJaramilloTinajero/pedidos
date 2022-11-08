@@ -1,0 +1,77 @@
+<div class="calendario">
+    <div class="d-flex justify-content-center ">
+        <h1>{{mes}} - {{ano}}</h1>
+    </div>
+    <div class="botones d-flex justify-content-center   ">
+        <!-- <div style="width: 170px; margin-top: 15px; margin-right: 100px;"> -->
+        <button (click)="anterior()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg><strong>Anterior</strong></button>
+        <!-- </div> -->
+
+
+        <!-- <div style="width: 170px; margin-top: 15px; margin-left: 100px;"> -->
+        <button (click)="siguiente()"><strong>Siguiente</strong><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+            </svg></button>
+        <!-- </div> -->
+
+
+    </div>
+    <ol class="olDias">
+        <li class="Dia-semana">Lunes</li>
+        <li class="Dia-semana">Martes</li>
+        <li class="Dia-semana">Miercoles</li>
+        <li class="Dia-semana">Jueves</li>
+        <li class="Dia-semana">Viernes</li>
+        <li class="Dia-semana">Sabado</li>
+        <li class="Dia-semana">Domingo</li>
+        <li *ngFor="let diaa of dias; let i = index">
+            <a (click)="pedidosModal(diaa)" data-bs-toggle="modal" data-bs-target="#pedidosModal">
+                <div *ngIf="diaa != null" class="dia">
+                    {{diaa}}<br>
+                    <small *ngIf="pedidosPorDia[i]">{{pedidosPorDia[i]}} pedidos</small>
+
+                </div>
+                <div *ngIf="diaa == null" class="NoExite"></div>
+            </a>
+        </li>
+    </ol>
+
+</div>
+
+<!-- Modal pedidos -->
+<div class="modal fade" id="pedidosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Pedidos de la fecha {{diaModal}} de {{mes}} de
+                    {{ano}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="pedidosModalArr.length == 0">
+                    <h4>No hay pedidos en este dia</h4>
+                </div>
+
+                <app-tabla-llevados *ngIf="ModalArrPedidosSinDia.length > 0" [llevados]="ModalArrPedidosSinDia"
+                    [mostrarAcciones]="false">
+                </app-tabla-llevados>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg><span>Cerrar</span> </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ export class CalendarioComponent implements OnInit {
   pedidosModalArr: ConDia[] = [];
   ModalArrPedidosSinDia: Llevados[] = [];
   diaModal: number = 0;
+  totalesModal: number[] = [];
 
   date: Date = new Date("2022-11-1");
 
@@ -87,6 +88,10 @@ export class CalendarioComponent implements OnInit {
       this.ModalArrPedidosSinDia[i].propina = pedidoConDia.propina;
       i++;
     });
+    this.totalesModal[0] = this.ModalArrPedidosSinDia.reduce((acc, curr) => acc += 1, 0);
+    this.totalesModal[1] = this.ModalArrPedidosSinDia.reduce((acc, curr) => acc += curr.precio, 0);
+    this.totalesModal[2] = this.ModalArrPedidosSinDia.reduce((acc, curr) => acc += curr.pago, 0);
+    this.totalesModal[3] = this.ModalArrPedidosSinDia.reduce((acc, curr) => acc += curr.propina, 0);
   }
 
 

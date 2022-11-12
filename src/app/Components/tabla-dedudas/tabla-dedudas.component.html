@@ -13,7 +13,7 @@
         <tr *ngFor="let deuda of deudas">
             <td>{{deuda.domicilio}}</td>
             <td>{{deuda.precio | currency}}</td>
-            <td>{{deuda.dia}}</td>
+            <td>{{deuda.dia | date}}</td>
             <td>{{deuda.Tipo}}</td>
             <td>
                 <button class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown"

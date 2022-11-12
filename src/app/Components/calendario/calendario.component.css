@@ -4,6 +4,10 @@ ol {
     grid-template-columns: repeat(7, 1fr);
 }
 
+.tabla-totales {
+    width: 70%;
+}
+
 a {
     text-decoration: none;
 }
@@ -20,6 +24,17 @@ a {
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.dia:hover small {
+    opacity: 1;
+    font-size: 14px;
+}
+
+.dia small {
+    opacity: .55;
+    font-size: 13px;
+    transition: all .3s ease-in-out;
 }
 
 .olDias {
@@ -54,16 +69,32 @@ a {
     color: white;
 }
 
-.Dia-semana {
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    /* margin-bottom: 0px; */
-    padding-bottom: 10px;
-    padding-top: 7px;
-    padding-left: 8px;
-    border-bottom: 1px rgb(255, 255, 255, .5) solid;
+@media only screen and (max-width: 700px) {
+    .Dia-semana {
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        /* margin-bottom: 0px; */
+        padding-bottom: 10px;
+        padding-top: 7px;
+        /* padding-left: 3px; */
+        border-bottom: 1px rgb(255, 255, 255, .5) solid;
+    }
 }
+
+@media only screen and (min-width: 700px) {
+    .Dia-semana {
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        /* margin-bottom: 0px; */
+        padding-bottom: 10px;
+        padding-top: 7px;
+        padding-left: 8px;
+        border-bottom: 1px rgb(255, 255, 255, .5) solid;
+    }
+}
+
 
 .dia {
     color: white;

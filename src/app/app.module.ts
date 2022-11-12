@@ -17,6 +17,7 @@ import { ConDiaComponent } from './Components/con-dia/con-dia.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { ConCalendarioComponent } from './Components/con-calendario/con-calendario.component';
 import { CalendarioComponent } from './Components/calendario/calendario.component';
+import { FilterPedidosPipe } from './Pipes/filter-pedidos.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { CalendarioComponent } from './Components/calendario/calendario.componen
     PedidosComponent,
     NavbarComponent,
     PedidosTablaComponent, 
-    AlertComponent, LlevadosComponent, TablaLlevadosComponent, DeudaComponent, TablaDedudasComponent, ConDiaComponent, FooterComponent, ConCalendarioComponent, CalendarioComponent
+    AlertComponent, LlevadosComponent, TablaLlevadosComponent, DeudaComponent, TablaDedudasComponent, ConDiaComponent, FooterComponent, ConCalendarioComponent, CalendarioComponent, FilterPedidosPipe
   ],
   imports: [
     BrowserModule,

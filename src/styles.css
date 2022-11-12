@@ -22,6 +22,14 @@ p {
     padding: 5px;
 }
 
+.tablaHover tbody tr{
+    transition: all .4s ease-in-out;
+}
+
+.tablaHover tbody tr:hover{
+    scale: 1.016;
+}
+
 .tabla {
     margin-top: 40px;
     width: 95%;
@@ -61,14 +69,14 @@ table{
     max-width: 1600px;
 }
 
-table tbody tr {
+/* table tbody tr {
     transition: all .2s ease;
 }
 
 table tbody tr:hover {
     background-color: rgb(34, 145, 179, 0.6);
     color: rgb(34, 145, 179, 1);
-}
+} */
 
 
 @media only screen and (max-width: 800px) {

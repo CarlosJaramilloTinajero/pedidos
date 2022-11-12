@@ -2,80 +2,69 @@
     <h2 class="titulo">Pedidos por dia</h2>
 </div>
 
-<div class="d-flex justify-content-end" style="margin-top: 80px;">
-    <div class="botononesOPC d-flex">
-        <h5 (click)="cambioDeBusqueda('dia')">Dia</h5>
-        <h5 (click)="cambioDeBusqueda('dom')">Dom</h5>
-        <!-- <hr class="hrMenu"> -->
+<!-- Tabla y tipo de busqueda de pedidos -->
+<div class="d-flex justify-content-end" style="max-width: 1600px; margin-left: auto; margin-right: auto;">
+    <!-- Cambiar el tipo de busqueda -->
+    <div class="d-blok divBusqueda">
+        <div class="botononesOPC d-flex">
+            <h5 (click)="cambioDeBusqueda('dia')">Dia</h5>
+            <h5 (click)="cambioDeBusqueda('dom')">Domicilio</h5>
+        </div>
+
+        <div class="mb-4 inputText">
+            <!-- Busqueda por dia -->
+            <div [ngClass]="{'mostrar': busquedaPor === 'dia', 'ocultar': busquedaPor === 'dom' }">
+                <label for="" class="form-label">Busqueda por dia</label>
+                <input type="date" name="dia" [(ngModel)]="diaForm" id="" class="form-control" style="width: 164px;"
+                    (ngModelChange)="bucarPordia()">
+            </div>
+
+            <!-- Busqueda por domicilio -->
+            <div [ngClass]="{'mostrar': busquedaPor === 'dom', 'ocultar': busquedaPor === 'dia' }">
+                <label for="" class="form-label">Busqueda por dom.</label>
+                <input type="text" placeholder="Domicilio" name="dom" [(ngModel)]="domForm" class="form-control"
+                    style="width: 164px;" (ngModelChange)="buscarPorDom()">
+            </div>
+
+        </div>
     </div>
 
-    <!-- Busqueda por dia -->
-    <form action="" class="formulario" (ngSubmit)="bucarPordia()"
-        [ngClass]="{'mostrar': busquedaPor === 'dia', 'ocultar': busquedaPor === 'dom' }">
-        <div class="mb-4">
-            <label for="" class="form-label">Busqueda por dia</label>
-            <input type="date" name="dia" [(ngModel)]="diaForm" id="" class="form-control" style="width: 164px;">
-        </div>
-        <div class="mb-4">
-            <button type="submit" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                    height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg><span>Buscar</span></button>
-        </div>
-    </form>
-
-
-    <!-- Busqueda por domicilio -->
-    <form action="" class="formulario" (ngSubmit)="buscarPorDom()"
-        [ngClass]="{'mostrar': busquedaPor === 'dom', 'ocultar': busquedaPor === 'dia' }">
-        <div class="mb-4">
-            <label for="" class="form-label">Busqueda por dom.</label>
-            <input type="text" name="dom" [(ngModel)]="porDom" class="form-control" style="width: 164px;">
-        </div>
-        <div class="mb-4">
-            <button type="submit" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                    height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg><span>Buscar</span></button>
-        </div>
-    </form>
-
-
+    <!-- Tabla totales por dia o domicilio -->
     <table class="table table-dark  table-striped tablaChica">
         <thead>
             <tr>
                 <th>Tipo</th>
                 <th>Valor</th>
-
             </tr>
         </thead>
         <tbody>
+            <tr *ngIf="busquedaPor == 'dia' ">
+                <td>Dia</td>
+                <td *ngIf="dia != ''">{{dia | date}}</td>
+                <td *ngIf="dia == ''">Todos</td>
+            </tr>
+            <tr *ngIf="busquedaPor == 'dom' ">
+                <td>Domicilio</td>
+                <td *ngIf="domForm != ''">{{domForm}}</td>
+                <td *ngIf="domForm == ''">Todos</td>
+            </tr>
             <tr>
                 <td>Pedidos cantidad</td>
                 <td>{{conDiaFillter.length}}</td>
             </tr>
-            <tr *ngIf="busquedaPor == 'dia' ">
-                <td>Dia</td>
-                <td>{{dia}}</td>
-            </tr>
-            <tr *ngIf="busquedaPor == 'dom' ">
-                <td>Domicilio</td>
-                <td>{{dom}}</td>
-            </tr>
             <tr>
                 <td>Total Propina</td>
-                <td>{{totalPropina}}</td>
+                <td>{{totalPropina |currency}}</td>
             </tr>
             <tr>
                 <td>Total Pagado</td>
-                <td>{{totalPagado}}</td>
+                <td>{{totalPagado | currency}}</td>
             </tr>
         </tbody>
     </table>
 </div>
 
+<!-- Tabla pedidos -->
 <table class="table table-dark tabla table-striped">
     <thead>
         <button type="button" class="btn btn-secondary btn-sm btn-refres" (click)="getConDia()">Refrescar tabla</button>
@@ -93,10 +82,10 @@
         <tr *ngFor="let pedidoDia of conDiaFillter; let indice = index">
             <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{indice + 1}}</td>
             <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.domicilio}}</td>
-            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.precio}}</td>
-            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.pago}}</td>
-            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.propina}}</td>
-            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.dia}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.precio | currency}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.pago | currency}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.propina | currency}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.dia | date}}</td>
         </tr>
     </tbody>
 </table>

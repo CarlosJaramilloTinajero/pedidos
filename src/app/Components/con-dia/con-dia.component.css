@@ -1,10 +1,10 @@
 @media only screen and (min-width: 800px) {
 
     .botononesOPC {
-        margin-top: -40px;
-        margin-right: -180px;
         border-bottom: 1px #2291b388 solid;
-        height: 35px;
+        width: 101%;
+        margin-right: 30px;
+        margin-left: -15px;
     }
 
     .tablaChica {
@@ -14,6 +14,7 @@
 
     .formulario {
         margin-right: 30px;
+        /* width: 500px; */
     }
 
     .formulario .btn {
@@ -24,13 +25,24 @@
         color: white;
         transition: all .8s ease;
         border-radius: 5px;
-        padding: 7px;
+        padding: 8px;
         font-size: 15px;
-        height: 35px;
-        margin-left: 24px;
-        margin-right: 24px;
-        width: 49px;
+        /* width: 49px;     */
         cursor: pointer;
+        margin-left: 8px;
+    }
+
+    .inputText {
+        margin-right: 15px;
+        margin-top: 13px;
+    }
+
+    .inputText label {
+        margin-bottom: 15px;
+    }
+
+    .divBusqueda {
+        margin-right: 20px;
     }
 
 }
@@ -38,12 +50,10 @@
 @media only screen and (max-width: 800px) {
 
     .botononesOPC {
-        margin-top: -40px;
-        margin-right: -230px;
-        margin-left: 10px;
         border-bottom: 1px #2291b388 solid;
-        height: 35px;
-        /* width: 30px; */
+        width: 101%;
+        margin-right: 30px;
+        margin-left: -15px;
     }
 
     .tablaChica {
@@ -51,26 +61,29 @@
         margin-right: 10px;
     }
 
-    .formulario {
-        margin-right: 10px;
-        /* width: 800px; */
-        margin-left: 60px;
-    }
-
-    .formulario .btn {
-        margin-left: 25px;
-    }
-
     .botononesOPC h5 {
         color: white;
         transition: all .8s ease;
         border-radius: 5px;
-        padding: 7px;
+        padding: 8px;
         font-size: 15px;
-        height: 35px;
-        margin-left: 20px;
-        margin-right: 20px;
+        /* width: 49px;     */
         cursor: pointer;
+        margin-left: 8px;
+    }
+
+    .inputText {
+        margin-right: 15px;
+        margin-top: 13px;
+    }
+
+    .inputText label {
+        margin-bottom: 15px;
+    }
+
+    .divBusqueda {
+        margin-right: 5px;
+        margin-left: 18px;
     }
 }
 
@@ -86,10 +99,6 @@
     margin: 0px;
 }
 
-.formulario label {
-    color: white;
-}
-
 .tabla th:hover {
     cursor: pointer;
 }
@@ -102,27 +111,14 @@
     background-color: #2291b3;
 }
 
-.btnm{
+.btnm {
     margin-left: auto;
     margin-right: auto;
 }
 
-.hrMenu {
-    color: #2291b3;
-    margin-top: 30px;
-    width: 180px;
-    margin-right: -130px;
-    /* z-index: -10; */
-}
-
-.btn-refres{
+.btn-refres {
     /* margin-left: 20px; */
     margin-bottom: 10px;
-}
-
-.formulario .btn{
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .maxFilas {

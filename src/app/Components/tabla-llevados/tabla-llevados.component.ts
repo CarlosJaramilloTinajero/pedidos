@@ -13,6 +13,7 @@ export class TablaLlevadosComponent implements OnInit {
 
   @Input() llevados: Llevados[] = [];
   @Input() mostrarAcciones: boolean = true;
+  @Input() classTable: string = "";
   llevadoModal: Llevados = new Llevados();
   tituloModal: string = "";
   constructor() { }

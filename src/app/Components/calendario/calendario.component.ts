@@ -25,8 +25,7 @@ export class CalendarioComponent implements OnInit {
 
   pedidosPorDia: number[] = [];
 
-  indice: number = 0;
-  diasMes: string[] = [];
+
   mes: string = "";
   mesInt: number = 0;
   ano: number = 0;
@@ -48,21 +47,24 @@ export class CalendarioComponent implements OnInit {
       this.getDia();
     });
   }
+
   getDia() {
     this.mes = this.meses[this.date.getMonth()];
     this.mesInt = this.date.getMonth();
-    var mes: number = this.date.getMonth();
     this.ano = this.date.getFullYear();
 
-    if (new Date(this.ano, mes, 1).getDay() == 0) {
-      this.indice = 6;
+    var mesVar: number = this.date.getMonth();
+    var indice: number = 0;
+
+    if (new Date(this.ano, mesVar, 1).getDay() == 0) {
+      indice = 6;
     } else {
-      this.indice = (new Date(this.ano, mes, 1).getDay()) - 1;
+      indice = (new Date(this.ano, mesVar, 1).getDay()) - 1;
     }
 
-    for (let i = 0; i < this.getCantidadDias(mes, this.ano) + this.indice; i++) {
-      if (i >= this.indice) {
-        this.dias[i] = i - (this.indice - 1);
+    for (let i = 0; i < this.getCantidadDias(mesVar, this.ano) + indice; i++) {
+      if (i >= indice) {
+        this.dias[i] = i - (indice - 1);
         this.pedidosPorDia[i] = this.getCantidadDePedidosPorDia(new Date(this.ano, this.mesInt, this.dias[i]));
       }
     }
@@ -97,8 +99,6 @@ export class CalendarioComponent implements OnInit {
 
   // Helper
   inicializarVar() {
-    this.indice = 0;
-    this.diasMes = [];
     this.mes = "";
     this.mesInt = 0;
     this.ano = 0;

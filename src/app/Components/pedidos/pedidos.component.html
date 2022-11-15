@@ -1,23 +1,46 @@
-<div class="contenedor div">
+<div class="contenedor div" style="height: 190px; margin-bottom: 0px;">
     <h2 class="titulo">Agregar nuevo pedido</h2>
 
-    <form class="row g-3 " (ngSubmit)="addPedidoS();">
-        <div class="col-auto">
-            <input type="text" class="form-control" name="domicilio" [(ngModel)]="addPedido.domicilio"
-                placeholder="Domicilio">
+    <form class="row g-3" (ngSubmit)="addPedidoS(pedidoForm);" #pedidoForm="ngForm">
+        <div class="col-auto btnH">
+
+            <input type="text" class="form-control"
+                [ngClass]="{'inputInvalid':domicilio.errors?.['required'] && domicilio.dirty && domicilio.touched || submitForm && domicilio.errors?.['required']}"
+                id="domicilio" name="domicilio" [(ngModel)]="addPedido.domicilio" placeholder="Domicilio" required
+                #domicilio="ngModel">
+
+            <div *ngIf="domicilio.invalid && (domicilio.dirty || domicilio.touched) || submitForm">
+                <h6 class="invalidModel" *ngIf="domicilio.errors?.['required']">Este campo es
+                    requerido</h6>
+            </div>
+
+        </div>
+        <div class="col-auto btnH">
+            <input type="number" class="form-control" name="precio"
+            [ngClass]="{'inputInvalid':precioForm.errors?.['required'] && precioForm.dirty && precioForm.touched || submitForm && precioForm.errors?.['required']}"
+            [(ngModel)]="addPedido.precio" required #precioForm="ngModel">
+
+            <div *ngIf="precioForm.invalid && (precioForm.dirty || precioForm.touched) || submitForm">
+                <h6 class="invalidModel" *ngIf="precioForm.errors?.['required']">Este campo es
+                    requerido</h6>
+            </div>
         </div>
         <div class="col-auto">
-            <input type="number" class="form-control" name="precio" placeholder="Precio" [(ngModel)]="addPedido.precio">
+            <button style="margin-top: 5px;" type="submit" class="btn btn-primary" name="botonSubmit"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                </svg><span>Agregar</span></button>
         </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-              </svg><span>Agregar</span></button>
-        </div>
+
     </form>
+</div>
+
+<div style="width: 70%; margin-right: auto; margin-left: auto;">
     <app-alert [class]="class" [msg]="msg" [mostrar]="mostrar" (quitarAlert)="quitarAler();"></app-alert>
 </div>
 
-<app-pedidos-tabla [pedidos]="pedidos" [maxPedidos]="pedidos.length" (eventEliminar)="EliminarPedido($event, true)" (eventPut)="putPedido($event)"
-    (eventLlevado)="addPedidoLlevado($event)" (eventDeuda)="addDeuda($event)">
+<app-pedidos-tabla [pedidos]="pedidos" [maxPedidos]="pedidos.length" (eventEliminar)="EliminarPedido($event, true)"
+    (eventPut)="putPedido($event)" (eventLlevado)="addPedidoLlevado($event)" (eventDeuda)="addDeuda($event)">
 </app-pedidos-tabla>

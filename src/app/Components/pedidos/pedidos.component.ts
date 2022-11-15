@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Deuda } from 'src/app/Models/deuda';
 import { Llevados } from 'src/app/Models/llevados';
 import { Pedidos } from 'src/app/Models/pedidos';
@@ -17,12 +18,14 @@ export class PedidosComponent implements OnInit {
   addPedido: Pedidos = new Pedidos();
   dom: string = "";
   pre: number = 0;
+  submitForm: boolean = false;
 
   // Alert
   mostrar: number = 0;
   msg: string = "";
   class: string = "";
-  constructor(private pedidosService: PedidosService, private llevadosService: LlevadosService, private deudaService: DeudaService) { }
+  constructor(private pedidosService: PedidosService, private llevadosService: LlevadosService,
+    private deudaService: DeudaService) { }
 
   ngOnInit(): void {
     this.getPedidos();
@@ -36,14 +39,22 @@ export class PedidosComponent implements OnInit {
     });
   }
 
-  addPedidoS() {
-    this.pedidosService.addPedido(this.addPedido).subscribe(data => {
-      console.log(data);
-      this.getPedidos();
-      this.ponerAler("Pedido agregado '" + this.addPedido.domicilio + "'", "alert alert-success");
-      this.addPedido.domicilio = "";
-      this.addPedido.precio = 0;
-    });
+  addPedidoS(form: NgForm) {
+    if (form.valid) {
+      this.pedidosService.addPedido(this.addPedido).subscribe(data => {
+        console.log(data);
+        this.getPedidos();
+        this.ponerAler("Pedido agregado '" + this.addPedido.domicilio + "'", "alert alert-success");
+        form.resetForm();
+        this.addPedido.domicilio = "";
+        this.addPedido.precio = 0;
+        this.submitForm=false;
+      });
+    } else {
+      // console.log("Invalido");
+      this.submitForm = true;
+
+    }
   }
 
   EliminarPedido(pedido: Pedidos, mostrarAlert: boolean) {

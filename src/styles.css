@@ -22,11 +22,11 @@ p {
     padding: 5px;
 }
 
-.tablaHover tbody tr{
+.tablaHover tbody tr {
     transition: all .4s ease-in-out;
 }
 
-.tablaHover tbody tr:hover{
+.tablaHover tbody tr:hover {
     scale: 1.016;
 }
 
@@ -55,7 +55,7 @@ p {
     /* align-items: center; */
 }
 
-.contenedor form{
+.contenedor form {
     margin-left: 20px;
 }
 
@@ -65,7 +65,7 @@ p {
     margin-bottom: 30px;
 }
 
-table{
+table {
     max-width: 1600px;
 }
 
@@ -160,14 +160,14 @@ table tbody tr:hover {
     max-width: max-content;
 }
 
-.btn svg{
+.btn svg {
     visibility: hidden;
     width: 0px;
     height: 0px;
     transition: all .3s ease-in-out;
 }
 
-.btn:hover svg{
+.btn:hover svg {
     visibility: visible;
     width: 18px;
     height: 18px;
@@ -211,4 +211,29 @@ table tbody tr:hover {
     box-shadow: 0px 0px 20px 0px #b32222;
     background-color: #b32222;
     transform: translateY(-2px);
+}
+
+.invalidModel {
+    font-size: 14px;
+    margin: 0px;
+    background-color: unset;
+    border: none;
+    padding: 0px;
+    z-index: 100;
+    color: #b32222;
+}
+
+.inputInvalid {
+    border: 1px #b32222 solid;
+}
+
+.inputInvalid:focus {
+    border: 1px #b32222 solid;
+    -webkit-box-shadow: 0px 0px 10px 0px #b32222;
+    -moz-box-shadow: 0px 0px 10px 0px #b32222;
+    box-shadow: 0px 0px 10px 0px #b32222;
+}
+
+.btnH {
+    height: 50px;
 }

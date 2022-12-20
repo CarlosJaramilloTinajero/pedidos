@@ -1,9 +1,13 @@
 <div class="contenedor div" style="height: 190px; margin-bottom: 0px;">
     <h2 class="titulo">Agregar nuevo pedido</h2>
 
+    <!-- La referencia pedidoForm es para este formulario, el cual tiene todos los atributos de el mismo -->
+    <!-- en el evento ngSubmit estamos mandando como parametro el formulario (pedidoForm) para poder hacer las validaciones antes de hacer el submit-->
     <form class="row g-3" (ngSubmit)="addPedidoS(pedidoForm);" #pedidoForm="ngForm">
         <div class="col-auto btnH">
 
+            <!-- La referencia #domicilio es para eset input que es un ngModel, el cual tiene todos los atributos como invalid o touched -->
+            <!-- En la ngClass vamos a poner la clase para cuando sea invalido el input -->
             <input type="text" class="form-control"
                 [ngClass]="{'inputInvalid':domicilio.errors?.['required'] && domicilio.dirty && domicilio.touched || submitForm && domicilio.errors?.['required']}"
                 id="domicilio" name="domicilio" [(ngModel)]="addPedido.domicilio" placeholder="Domicilio" required
@@ -15,16 +19,18 @@
             </div>
 
         </div>
+
         <div class="col-auto btnH">
             <input type="number" class="form-control" name="precio"
-            [ngClass]="{'inputInvalid':precioForm.errors?.['required'] && precioForm.dirty && precioForm.touched || submitForm && precioForm.errors?.['required']}"
-            [(ngModel)]="addPedido.precio" required #precioForm="ngModel">
+                [ngClass]="{'inputInvalid':precioForm.errors?.['required'] && precioForm.dirty && precioForm.touched || submitForm && precioForm.errors?.['required']}"
+                [(ngModel)]="addPedido.precio" required #precioForm="ngModel">
 
             <div *ngIf="precioForm.invalid && (precioForm.dirty || precioForm.touched) || submitForm">
                 <h6 class="invalidModel" *ngIf="precioForm.errors?.['required']">Este campo es
                     requerido</h6>
             </div>
         </div>
+
         <div class="col-auto">
             <button style="margin-top: 5px;" type="submit" class="btn btn-primary" name="botonSubmit"><svg
                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"

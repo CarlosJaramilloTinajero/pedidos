@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ConDiaService {
 
-  urlGet: string = "https://salas.peliculas.beauty/getConDia";
+  urlGet: string = "https://api.peliculas.beauty/getConDia";
   constructor(private http: HttpClient) { }
 
   getConDia(): Observable<ConDia[]> {

@@ -8,10 +8,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DeudaService {
 
-  urlGet = "https://salas.peliculas.beauty/getDeudas";
-  urlPost = "https://salas.peliculas.beauty/addDeudas";
-  urlPut = "https://salas.peliculas.beauty/putDeudas/";
-  urlDelete = "https://salas.peliculas.beauty/deleteDeudas/";
+  urlGet = "https://api.peliculas.beauty/getDeudas";
+  urlPost = "https://api.peliculas.beauty/addDeudas";
+  urlPut = "https://api.peliculas.beauty/putDeudas/";
+  urlDelete = "https://api.peliculas.beauty/deleteDeudas/";
 
   constructor(private http: HttpClient) { }
 

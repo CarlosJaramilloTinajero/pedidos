@@ -8,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LlevadosService {
 
-  urlPost: string = "https://salas.peliculas.beauty/addLlevado";
-  urlGet: string = "https://salas.peliculas.beauty/getLlevados";
-  urlPut: string = "https://salas.peliculas.beauty/putLlevado/";
-  urlDelete: string = "https://salas.peliculas.beauty/deleteLlevado/";
+  urlPost: string = "https://api.peliculas.beauty/addLlevado";
+  urlGet: string = "https://api.peliculas.beauty/getLlevados";
+  urlPut: string = "https://api.peliculas.beauty/putLlevado/";
+  urlDelete: string = "https://api.peliculas.beauty/deleteLlevado/";
 
-  urlTerminarDia: string = "https://salas.peliculas.beauty/terminarDia";
+  urlTerminarDia: string = "https://api.peliculas.beauty/terminarDia";
 
   constructor(private http: HttpClient) { }
 

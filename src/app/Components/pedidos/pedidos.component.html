@@ -1,10 +1,17 @@
 <div class="contenedor div" style="height: 190px; margin-bottom: 0px;">
-    <h2 class="titulo">Agregar nuevo pedido</h2>
+    <div class="d-flex">
+        <h2 class="titulo" style="margin-left: 10px; margin-right: 20px;">Agregar nuevo pedido</h2>
+        <button *ngIf="!pedidoRapidoHabilitar" class="btn btn-secondary btnR"
+            (click)="pedidoRapidoHabilitar = true"><span>Rapido</span></button>
+
+        <button *ngIf="pedidoRapidoHabilitar" class="btn btn-primary btnR"
+            (click)="pedidoRapidoHabilitar = false"><span>Normal</span></button>
+    </div>
 
     <!-- La referencia pedidoForm es para este formulario, el cual tiene todos los atributos de el mismo -->
     <!-- en el evento ngSubmit estamos mandando como parametro el formulario (pedidoForm) para poder hacer las validaciones antes de hacer el submit-->
     <form class="row g-3" (ngSubmit)="addPedidoS(pedidoForm);" #pedidoForm="ngForm">
-        <div class="col-auto btnH">
+        <div *ngIf="!pedidoRapidoHabilitar" class="col-auto btnH">
 
             <!-- La referencia #domicilio es para eset input que es un ngModel, el cual tiene todos los atributos como invalid o touched -->
             <!-- En la ngClass vamos a poner la clase para cuando sea invalido el input -->
@@ -13,17 +20,16 @@
                 id="domicilio" name="domicilio" [(ngModel)]="addPedido.domicilio" placeholder="Domicilio" required
                 #domicilio="ngModel">
 
-            <div *ngIf="domicilio.invalid && (domicilio.dirty || domicilio.touched) || submitForm">
+            <div *ngIf="domicilio.invalid && (domicilio.dirty && domicilio.touched) || submitForm">
                 <h6 class="invalidModel" *ngIf="domicilio.errors?.['required']">Este campo es
                     requerido</h6>
             </div>
-
         </div>
 
-        <div class="col-auto btnH">
+        <div *ngIf="!pedidoRapidoHabilitar" class="col-auto btnH">
             <input type="number" class="form-control" name="precio"
                 [ngClass]="{'inputInvalid':precioForm.errors?.['required'] && precioForm.dirty && precioForm.touched || submitForm && precioForm.errors?.['required']}"
-                [(ngModel)]="addPedido.precio" required #precioForm="ngModel">
+                [value]="addPedido.precio" [(ngModel)]="addPedido.precio" required #precioForm="ngModel">
 
             <div *ngIf="precioForm.invalid && (precioForm.dirty || precioForm.touched) || submitForm">
                 <h6 class="invalidModel" *ngIf="precioForm.errors?.['required']">Este campo es
@@ -31,6 +37,17 @@
             </div>
         </div>
 
+        <div *ngIf="pedidoRapidoHabilitar" class="col-auto btnM">
+            <input type="text" class="form-control"
+                [ngClass]="{'inputInvalid':pedido.errors?.['required'] && pedido.dirty && pedido.touched || submitForm && pedido.errors?.['required']}"
+                id="pedido" name="pedido" [(ngModel)]="pedidoRapido" placeholder="Pedido: domicilio-precio-propina" required
+                #pedido="ngModel">
+
+            <div *ngIf="pedido.invalid && (pedido.dirty && pedido.touched) || submitForm">
+                <h6 class="invalidModel" *ngIf="pedido.errors?.['required']">Este campo es
+                    requerido</h6>
+            </div>
+        </div>
         <div class="col-auto">
             <button style="margin-top: 5px;" type="submit" class="btn btn-primary" name="botonSubmit"><svg
                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
@@ -48,5 +65,5 @@
 </div>
 
 <app-pedidos-tabla [pedidos]="pedidos" [maxPedidos]="pedidos.length" (eventEliminar)="EliminarPedido($event, true)"
-    (eventPut)="putPedido($event)" (eventLlevado)="addPedidoLlevado($event)" (eventDeuda)="addDeuda($event)">
+    (eventPut)="putPedido($event)" (eventLlevado)="addPedidoLlevado($event, true)" (eventDeuda)="addDeuda($event)">
 </app-pedidos-tabla>

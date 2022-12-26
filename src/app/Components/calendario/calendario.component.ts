@@ -15,7 +15,7 @@ export class CalendarioComponent implements OnInit {
   diaModal: number = 0;
   totalesModal: number[] = [];
 
-  date: Date = new Date("2022-11-1");
+  date: Date = new Date();
 
   diaSemana: string[] = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 

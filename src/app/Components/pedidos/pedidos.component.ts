@@ -19,6 +19,9 @@ export class PedidosComponent implements OnInit {
   dom: string = "";
   pre: number = 0;
   submitForm: boolean = false;
+  pedidoRapidoHabilitar: boolean = false;
+  pedidoRapido: string = "";
+
 
   // Alert
   mostrar: number = 0;
@@ -41,21 +44,60 @@ export class PedidosComponent implements OnInit {
 
   addPedidoS(form: NgForm) {
     if (form.valid) {
-      this.pedidosService.addPedido(this.addPedido).subscribe(data => {
-        console.log(data);
-        this.getPedidos();
-        this.ponerAler("Pedido agregado '" + this.addPedido.domicilio + "'", "alert alert-success");
-        form.resetForm();
-        this.addPedido.domicilio = "";
-        this.addPedido.precio = 0;
-        this.submitForm=false;
-      });
+      if (this.pedidoRapidoHabilitar) {
+        this.getPedidoRapido(this.pedidoRapido, form);
+      } else {
+        this.pedidosService.addPedido(this.addPedido).subscribe(data => {
+          console.log(data);
+          this.getPedidos();
+          this.ponerAler("Pedido agregado '" + this.addPedido.domicilio + "'", "alert alert-success");
+          form.resetForm();
+          this.addPedido.domicilio = "";
+          this.addPedido.precio = 0;
+          this.submitForm = false;
+        });
+      }
     } else {
       // console.log("Invalido");
       this.submitForm = true;
 
     }
   }
+
+  getPedidoRapido(pedidoString: string, form: NgForm): boolean {
+    let arr: string[] = pedidoString.split("-");
+
+    if (arr.length > 4 || arr.length < 3) {
+      this.ponerAler("Esta mal escrito el pedido rapido", "alert alert-danger");
+      return false;
+    } else {
+      let pedidoAux = new Llevados();
+      if (arr.length == 4) {
+        pedidoAux.domicilio = arr[0] + " " + arr[1];
+        pedidoAux.precio = parseInt(arr[2]);
+        pedidoAux.pago = parseInt(arr[2]);
+        pedidoAux.propina = parseInt(arr[3]);
+      } else if (arr.length == 3) {
+        pedidoAux.domicilio = arr[0];
+        pedidoAux.precio = parseInt(arr[1]);
+        pedidoAux.pago = parseInt(arr[1]);
+        pedidoAux.propina = parseInt(arr[2]);
+      }
+
+      this.llevadosService.addLlevado(pedidoAux).subscribe(
+        data => {
+          form.reset();
+          this.pedidoRapido = "";
+          this.ponerAler("Pedido '" + pedidoAux.domicilio + "' llevado", "alert alert-success");
+        },
+        error => {
+          this.ponerAler("Error al subir el pedido llevado", "alert alert-danger");
+        }
+      );
+    }
+    return false;
+  }
+
 
   EliminarPedido(pedido: Pedidos, mostrarAlert: boolean) {
     this.pedidosService.deletePedido(pedido).subscribe(data => {
@@ -75,15 +117,20 @@ export class PedidosComponent implements OnInit {
     });
   }
 
-  addPedidoLlevado(llevado: Llevados) {
+  addPedidoLlevado(llevado: Llevados, eliminarPedido: boolean) {
     this.llevadosService.addLlevado(llevado).subscribe(data => {
       console.log(data)
       this.ponerAler("Pedido '" + llevado.domicilio + "' llevado", "alert alert-success");
-      var pedidoEliminar: Pedidos = new Pedidos();
-      pedidoEliminar.id = llevado.id;
-      pedidoEliminar.domicilio = llevado.domicilio;
-      this.EliminarPedido(pedidoEliminar, false);
-    });
+      if (eliminarPedido) {
+        var pedidoEliminar: Pedidos = new Pedidos();
+        pedidoEliminar.id = llevado.id;
+        pedidoEliminar.domicilio = llevado.domicilio;
+        this.EliminarPedido(pedidoEliminar, false);
+      }
+    },
+      error => {
+        this.ponerAler("Error al subir el pedido llevado", "alert alert-danger");
+      });
   }
 
   addDeuda(deuda: Deuda) {

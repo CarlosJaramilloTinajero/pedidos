@@ -31,15 +31,15 @@
                             data-bs-target="#modificarModal">Modificar</button>
                     </li>
                     <li>
-                        <button class="dropdown-item" (click)="pedidoModal = pedido; llevadoModal.pago = pedido.precio"
-                            data-bs-toggle="modal" data-bs-target="#llevadoModal">Llevado</button>
+                        <button class="dropdown-item" (click)="llevadosModal(pedido)" data-bs-toggle="modal"
+                            data-bs-target="#llevadoModal">Llevado</button>
                     </li>
                     <li>
-                        <button class="dropdown-item" (click)="pedidoModal = pedido" data-bs-toggle="modal"
+                        <button class="dropdown-item" (click)="deudaModalEvent(pedido)" data-bs-toggle="modal"
                             data-bs-target="#deudaModal">Deuda</button>
                     </li>
                     <li>
-                        <button class="dropdown-item" (click)="pedidoModal = pedido" data-bs-toggle="modal"
+                        <button class="dropdown-item" (click)="eliminarModalEvent(pedido)" data-bs-toggle="modal"
                             data-bs-target="#eliminarModal">Eliminar</button>
                     </li>
                 </ul>
@@ -138,8 +138,8 @@
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label">Propina</label>
-                        <input type="number" name="propina" value="" [(ngModel)]="llevadoModal.propina"
-                            class="form-control">
+                        <input type="number" name="propina" [value]="llevadoModal.propina"
+                            [(ngModel)]="llevadoModal.propina" class="form-control">
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"><svg
@@ -180,8 +180,8 @@
                 <form action="" (ngSubmit)="submitDeuda();">
                     <div class="mb-4">
                         <label for="" class="form-label">Cantidad</label>
-                        <input type="number" name="precio" [(ngModel)]="deudaModal.precio" value=""
-                            class="form-control">
+                        <input type="number" name="precio" [value]="deudaModal.precio" [(ngModel)]="deudaModal.precio"
+                            value="" class="form-control">
                     </div>
                     <div class="mb-4">
                         <label for="" class="form-label">Dia</label>

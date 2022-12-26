@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Llevados } from 'src/app/Models/llevados';
+import { Pedidos } from 'src/app/Models/pedidos';
 
 @Component({
   selector: 'app-tabla-llevados',
@@ -22,13 +23,13 @@ export class TablaLlevadosComponent implements OnInit {
   }
 
   pedidoToPedidoModal(llevado: Llevados) {
-    this.llevadoModal.id = llevado.id;
-    this.llevadoModal.domicilio = llevado.domicilio;
-    this.llevadoModal.precio = llevado.precio;
-    this.llevadoModal.pago = llevado.pago;
-    this.llevadoModal.propina = llevado.propina;
+    this.llevadoModal = new Llevados();
+    this.llevadoModal = this.deepClonePedidosLlevados(llevado);
+    this.tituloModal = this.llevadoModal.domicilio;
+  }
 
-    this.tituloModal = llevado.domicilio;
+  eliminarModal(llevado: Llevados) {
+    this.llevadoModal = this.deepClonePedidosLlevados(llevado);
   }
 
   submitModificar() {
@@ -39,4 +40,11 @@ export class TablaLlevadosComponent implements OnInit {
     this.eventEliminar.emit(this.llevadoModal);
   }
 
+  deepClonePedidosLlevados(pedidos: Llevados): Llevados {
+    return JSON.parse(JSON.stringify(pedidos)) as Llevados;
+  }
+
+  deepClonePedidos(pedidos: Pedidos): Pedidos {
+    return JSON.parse(JSON.stringify(pedidos)) as Pedidos;
+  }
 }

@@ -28,14 +28,16 @@ export class TablaDedudasComponent implements OnInit {
     this.eventEliminar.emit(this.deudaModal);
   }
 
-
   pedidoToPedidoModal(deuda: Deuda) {
-    this.deudaModal.id = deuda.id;
-    this.deudaModal.domicilio = deuda.domicilio;
-    this.deudaModal.precio = deuda.precio;
-    this.deudaModal.dia = deuda.dia;
-    this.deudaModal.Tipo = deuda.Tipo;
+    this.deudaModal = this.deepClonePedidoDeuda(deuda);
     this.tituloModal = deuda.domicilio;
   }
 
+  deudaEliminar(deuda: Deuda) {
+    this.deudaModal = this.deepClonePedidoDeuda(deuda);
+  }
+
+  deepClonePedidoDeuda(pedidos: Deuda): Deuda {
+    return JSON.parse(JSON.stringify(pedidos)) as Deuda;
+  }
 }

@@ -51,11 +51,8 @@ export class PedidosTablaComponent implements OnInit {
   }
 
   pedidoToPedidoModal(pedido: Pedidos) {
-    this.pedidoModal.id = pedido.id;
-    this.pedidoModal.domicilio = pedido.domicilio;
-    this.pedidoModal.precio = pedido.precio;
-    this.pedidoModal.posicion = pedido.posicion;
-    this.tituloModal = pedido.domicilio;
+    this.pedidoModal = this.deepClonePedidos(pedido);
+    this.tituloModal = this.pedidoModal.domicilio;
   }
 
   submitModificar() {
@@ -73,7 +70,6 @@ export class PedidosTablaComponent implements OnInit {
     if (this.pagina * this.maxFilas < this.pedidos.length) {
       this.pagina++;
       this.paginaA++;
-      // console.log(this.items.length);
     }
   }
 
@@ -90,4 +86,23 @@ export class PedidosTablaComponent implements OnInit {
     this.paginaA = 0;
   }
 
+  llevadosModal(pedido: Pedidos) {
+    this.llevadoModal = new Llevados();
+    this.pedidoModal = this.deepClonePedidos(pedido);
+    this.llevadoModal.pago = this.pedidoModal.precio;
+  }
+
+
+  deudaModalEvent(pedido: Pedidos) {
+    this.deudaModal = new Deuda();
+    this.pedidoModal = this.deepClonePedidos(pedido);
+  }
+
+  eliminarModalEvent(pedido: Pedidos) {
+    this.pedidoModal = this.deepClonePedidos(pedido);
+  }
+
+  deepClonePedidos(pedidos: Pedidos): Pedidos {
+    return JSON.parse(JSON.stringify(pedidos)) as Pedidos;
+  }
 }

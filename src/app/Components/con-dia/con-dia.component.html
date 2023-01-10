@@ -1,5 +1,5 @@
 <div class="div contenedor">
-    <h2 class="titulo">Pedidos por dia</h2>
+    <h2 class="titulo">Todos los pedidos</h2>
 </div>
 
 <!-- Tabla y tipo de busqueda de pedidos -->
@@ -64,13 +64,41 @@
     </table>
 </div>
 
+
+<!-- <table class="table table-dark  table-striped table-sm tabla" style="box-shadow: none;">
+
+    <tbody>
+        <tr>
+            <th class="tdChico">Tipo</th>
+            <td *ngIf="busquedaPor == 'dia'">Dia</td>
+            <td *ngIf="busquedaPor == 'dom'">Domicilio</td>
+            <td>Cant. pedidos</td>
+            <td>Total propina</td>
+            <td>Total pagado</td>
+        </tr>
+
+        <tr>
+            <th>Valor</th>
+            <td *ngIf="dia != '' && busquedaPor == 'dia'">{{dia | date}}</td>
+            <td *ngIf="dia == '' && busquedaPor == 'dia'">Todos</td>
+            <td *ngIf="domForm != '' && busquedaPor == 'dom'">{{domForm}}</td>
+            <td *ngIf="domForm == '' && busquedaPor == 'dom'">Todos</td>
+            <td>{{conDiaFillter.length}}</td>
+            <td>{{totalPropina |currency}}</td>
+            <td>{{totalPagado | currency}}</td>
+        </tr>
+
+    </tbody>
+
+</table> -->
+
+
 <!-- Tabla pedidos -->
 <table class="table table-dark tabla table-striped">
     <thead>
         <button type="button" class="btn btn-secondary btn-sm btn-refres" (click)="getConDia()">Refrescar tabla</button>
-
         <tr>
-            <th>#</th>
+            <th class="tdChico">#</th>
             <th (click)="acomodarPorDomicilio()">Domicilio</th>
             <th (click)="acomodarPorPrecio()">Precio</th>
             <th (click)="acomodarPorPago()">Pago</th>
@@ -80,7 +108,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let pedidoDia of conDiaFillter; let indice = index">
-            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{indice + 1}}</td>
+            <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA" class="tdChico">{{indice + 1}}</td>
             <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.domicilio}}</td>
             <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.precio | currency}}</td>
             <td *ngIf="indice < maxFilas * pagina && indice >= maxFilas * paginaA">{{pedidoDia.pago | currency}}</td>

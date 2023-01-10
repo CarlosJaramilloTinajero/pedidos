@@ -16,7 +16,7 @@ const routes: Routes = [{
   path: 'Deudas',
   component: DeudaComponent
 }, {
-  path: 'PedidosConDia',
+  path: 'todosLosPedidos',
   component: ConDiaComponent
 },{
   path: 'conCalendario',

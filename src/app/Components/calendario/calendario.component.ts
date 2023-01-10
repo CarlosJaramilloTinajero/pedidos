@@ -17,6 +17,9 @@ export class CalendarioComponent implements OnInit {
 
   date: Date = new Date();
 
+  diaSemanaCalendario: string[] = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+  diaSemanaCalendarioAbreviado: string[] = ["Lun", "Mar", "Mier", "Jue", "Vie", "Sab", "Dom"];
+
   diaSemana: string[] = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 
   meses: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Juio", "Agosto",
@@ -73,21 +76,26 @@ export class CalendarioComponent implements OnInit {
 
   pedidosModal(dia: number) {
     this.ModalArrPedidosSinDia = [];
-    if (dia < 10) {
-      var fecha: string = this.ano.toString() + "-" + (this.mesInt + 1).toString() + "-0" + dia.toString();
-    } else {
-      var fecha: string = this.ano.toString() + "-" + (this.mesInt + 1).toString() + "-" + dia.toString();
+
+    let mesF = "";
+
+    if (this.mesInt < 10) {
+      mesF = "0";
     }
+
+    if (dia < 10) {
+      var fecha: string = this.ano.toString() + "-" + mesF + (this.mesInt + 1).toString() + "-0" + dia.toString();
+    } else {
+      var fecha: string = this.ano.toString() + "-" + mesF + (this.mesInt + 1).toString() + "-" + dia.toString();
+    }
+
+    // alert(fecha);
     this.pedidosModalArr = this.conDia.filter(pedido => pedido.dia == fecha);
     this.diaModal = dia;
     var i: number = 0;
     this.pedidosModalArr.forEach(pedidoConDia => {
       this.ModalArrPedidosSinDia[i] = new Llevados();
-      this.ModalArrPedidosSinDia[i].id = pedidoConDia.id;
-      this.ModalArrPedidosSinDia[i].domicilio = pedidoConDia.domicilio;
-      this.ModalArrPedidosSinDia[i].precio = pedidoConDia.precio;
-      this.ModalArrPedidosSinDia[i].pago = pedidoConDia.pago;
-      this.ModalArrPedidosSinDia[i].propina = pedidoConDia.propina;
+      this.ModalArrPedidosSinDia[i] = this.deepClone(pedidoConDia);
       i++;
     });
     this.totalesModal[0] = this.ModalArrPedidosSinDia.reduce((acc, curr) => acc += 1, 0);
@@ -98,6 +106,9 @@ export class CalendarioComponent implements OnInit {
 
 
   // Helper
+  deepClone(pedidosSinDia: Llevados): Llevados {
+    return JSON.parse(JSON.stringify(pedidosSinDia));
+  }
   inicializarVar() {
     this.mes = "";
     this.mesInt = 0;

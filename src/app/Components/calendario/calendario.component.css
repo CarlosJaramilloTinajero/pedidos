@@ -71,27 +71,33 @@ a {
 
 @media only screen and (max-width: 700px) {
     .Dia-semana {
+        padding-bottom: 10px;
+        padding-top: 7px;
+        border-bottom: 1px rgb(255, 255, 255, .5) solid;
+        text-align: center;
+    }
+
+    .Dia-semana span {
         color: white;
         font-size: 14px;
         font-weight: bold;
-        /* margin-bottom: 0px; */
-        padding-bottom: 10px;
-        padding-top: 7px;
-        /* padding-left: 3px; */
-        border-bottom: 1px rgb(255, 255, 255, .5) solid;
     }
 }
 
 @media only screen and (min-width: 700px) {
     .Dia-semana {
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        /* margin-bottom: 0px; */
         padding-bottom: 10px;
         padding-top: 7px;
         padding-left: 8px;
         border-bottom: 1px rgb(255, 255, 255, .5) solid;
+        text-align: center;
+    }
+
+    .Dia-semana span {
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+
     }
 }
 

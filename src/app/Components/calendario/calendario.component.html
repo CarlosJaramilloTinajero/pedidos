@@ -18,19 +18,17 @@
 
     </div>
     <ol class="olDias">
-        <li class="Dia-semana">Lunes</li>
-        <li class="Dia-semana">Martes</li>
-        <li class="Dia-semana">Miercoles</li>
-        <li class="Dia-semana">Jueves</li>
-        <li class="Dia-semana">Viernes</li>
-        <li class="Dia-semana">Sabado</li>
-        <li class="Dia-semana">Domingo</li>
+        <li class="Dia-semana d-none d-md-block" *ngFor="let diaSemana of diaSemanaCalendario">
+            <span>{{diaSemana}}</span>
+        </li>
+        <li class="Dia-semana d-md-none" *ngFor="let diaSemana of diaSemanaCalendarioAbreviado">
+            <span>{{diaSemana}}</span>
+        </li>
         <li *ngFor="let diaa of dias; let i = index">
             <a (click)="pedidosModal(diaa)" data-bs-toggle="modal" data-bs-target="#pedidosModal">
                 <div *ngIf="diaa != null" class="dia">
                     {{diaa}}<br>
-                    <small *ngIf="pedidosPorDia[i]">{{pedidosPorDia[i]}} pedidos</small>
-
+                    <small *ngIf="pedidosPorDia[i]">{{pedidosPorDia[i]}} <span class="d-none d-sm-block">pedidos</span></small>
                 </div>
                 <div *ngIf="diaa == null" class="NoExite"></div>
             </a>

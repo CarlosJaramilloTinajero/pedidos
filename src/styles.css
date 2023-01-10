@@ -69,6 +69,11 @@ table {
     max-width: 1600px;
 }
 
+.tdChico {
+    width: 50px;
+    /* max-width: 50px; */
+}
+
 /* table tbody tr {
     transition: all .2s ease;
 }
